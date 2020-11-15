@@ -210,9 +210,31 @@ public class WGraph_DS implements weighted_graph , Serializable {
 		return ModeCount;
 	}
 	
+	/**
+	 * return true iff the inner states of this and other are the same
+	 */
 	@Override
 	public boolean equals(Object other) {
-		return (this.toString().equals(other.toString()));
+		if(!(other instanceof weighted_graph)){return false;}										//make sure other is a graph
+		weighted_graph g = (weighted_graph)other;	
+		
+		for(node_info n : this.getV()) {															//if the node's lists are different, return false
+			if(g.getNode(n.getKey()) == null) {return false;}
+		}
+		
+		for(node_info n : g.getV()) {																//if the node's lists are different, return false
+			if(this.getNode(n.getKey()) == null) {return false;}
+		}
+		
+		for(node_info n : this.getV()) {															//for each node in the graph,
+			for(node_info n2 : this.getV()) {														//go though all the nodes in the graph,
+				if(g.getEdge(n.getKey(), n2.getKey()) != this.getEdge(n.getKey(), n2.getKey())) {	//and make sure the edges are equals, return false if not
+					return false;
+				}
+			}
+		}
+		
+		return true;																				//if everything is equals, return true
 	}
 	
 	/**
