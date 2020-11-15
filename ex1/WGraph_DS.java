@@ -157,6 +157,7 @@ public class WGraph_DS implements weighted_graph , Serializable {
 			no = (nodeInfo)n;
 			no.neighbors.remove(key);					//remove the node as a neighbor
 			no.weights.remove(key);
+			number_of_edges--;							//and remove an edge from the count
 		}
 		nodes.remove(key);								//remove the node from the graph's nodes list
 		number_of_nodes--;								//update the counters
@@ -174,10 +175,10 @@ public class WGraph_DS implements weighted_graph , Serializable {
 		nodeInfo Node1 = (nodeInfo)nodes.get(node1);						//get the nodes as node objects
 		nodeInfo Node2 = (nodeInfo)nodes.get(node2);
 		
-		if(Node1 == null || Node2 == null || !hasEdge(node1,node2)) return;//check for valid input
+		if(Node1 == null || Node2 == null || !hasEdge(node1,node2)) return;	//check for valid input
 		
 		Node1.neighbors.remove(node2);										//remove the nodes from each othor's neighbors lists
-		Node1.weights.remove(node1);
+		Node1.weights.remove(node2);
 		Node2.neighbors.remove(node1);
 		Node2.weights.remove(node1);
 		
@@ -207,6 +208,11 @@ public class WGraph_DS implements weighted_graph , Serializable {
 	@Override
 	public int getMC() {
 		return ModeCount;
+	}
+	
+	@Override
+	public boolean equals(Object other) {
+		return (this.toString().equals(other.toString()));
 	}
 	
 	/**
